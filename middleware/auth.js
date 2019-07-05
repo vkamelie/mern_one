@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const SecToken = process.env.jwtSecret;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 module.exports = function(req, res, next) {
   //get token from header
@@ -14,11 +14,11 @@ module.exports = function(req, res, next) {
   }
   //verify token
   try {
-    const decoded = jwt.verify(token, SecToken);
+    const decoded = jwt.verify(token, JWT_SECRET);
 
     req.user = decoded.user;
     next();
   } catch (err) {
-    res.status(401).json({ msg: "Token is not vaild" });
+    res.status(401).json({ msg: "Token is not valid" });
   }
 };
